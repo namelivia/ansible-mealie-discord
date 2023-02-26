@@ -27,5 +27,5 @@
       - "{{ hostvars[inventory_hostname].working_directory }}movies:/movies"
     env:
       DISCORD_TOKEN: "{{ discord_token }}"
-      MEALIE_TOKEN: "{{ discord_token }}"
-      MEALIE_URL: "{{ discord_token }}"
+      MEALIE_TOKEN: "{{ mealie_token }}"
+      MEALIE_URL: "{{ mealie_url }}"
