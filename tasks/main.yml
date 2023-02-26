@@ -1,0 +1,31 @@
+---
+
+- name: 'Check mandatory variables are defined'
+  assert:
+    that:
+      - application_name is defined
+      - cloudwatch_region is defined
+      - cloudwatch_log_group is defined
+      - discord_token is defined
+      - mealie_token is defined
+      - mealie_url is defined
+
+- name: Create app container
+  docker_container:
+    name: "{{ application_name }}"
+    image: "namelivia/{{ application_name }}:latest"
+    pull: true
+    cleanup: true
+    restart_policy: "always"
+    memory: "10MB"
+    log_driver: "awslogs"
+    log_options:
+      awslogs-region: "{{ cloudwatch_region }}"
+      awslogs-group: "{{ cloudwatch_log_group }}"
+      awslogs-stream: "{{ application_name }}"
+    volumes:
+      - "{{ hostvars[inventory_hostname].working_directory }}movies:/movies"
+    env:
+      DISCORD_TOKEN: "{{ discord_token }}"
+      MEALIE_TOKEN: "{{ discord_token }}"
+      MEALIE_URL: "{{ discord_token }}"
